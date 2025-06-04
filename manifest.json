@@ -1,0 +1,34 @@
+{
+  "name": "Motivación y Emoción · Plan 2025",
+  "short_name": "MotivaciónEmoción",
+  "description": "WebApp educativa minimalista e interactiva: plan crítico, sesiones, objetivos y bibliografía 2025.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f7fa",
+  "theme_color": "#2050d5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/fluency/96/000000/brain.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/fluency/144/000000/brain.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/fluency/192/000000/brain.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/fluency/512/000000/brain.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "lang": "es-MX",
+  "scope": "./"
+}

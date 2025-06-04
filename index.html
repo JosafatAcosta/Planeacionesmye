@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Motivación y Emoción: Plan 2025</title>
+  <meta name="theme-color" content="#2050d5"/>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="https://img.icons8.com/fluency/48/000000/brain.png">
+  <style>
+    :root {
+      --primary: #2050d5;
+      --accent: #1a397b;
+      --bg: #f6f7fa;
+      --card: #fff;
+      --border: #e0e3ee;
+      --shadow: 0 3px 16px #1a397b13;
+      --radius: 16px;
+      --transition: .18s cubic-bezier(.4,0,.2,1);
+      --gray: #606b80;
+    }
+    html, body {
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: #1a397b;
+      min-height: 100vh;
+      font-size: 17px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    header {
+      padding: 32px 10vw 16px 10vw;
+      background: linear-gradient(90deg, var(--primary) 60%, #4a92e0 100%);
+      color: #fff;
+      text-align: center;
+      border-radius: 0 0 28px 28px;
+      box-shadow: 0 8px 24px #2050d51a;
+    }
+    h1 {
+      font-size: 2em;
+      margin: 0 0 4px 0;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .subtitle {
+      font-size: 1.08em;
+      opacity: 0.95;
+    }
+    nav {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: #f8fafe;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      user-select: none;
+    }
+    nav button {
+      flex: 1;
+      font-size: 1.08em;
+      font-weight: 600;
+      color: var(--accent);
+      background: none;
+      border: none;
+      padding: 14px 0 12px 0;
+      transition: background .18s, color .18s;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+    }
+    nav button.active, nav button:active {
+      color: var(--primary);
+      background: #e6eefe;
+      border-bottom: 3px solid var(--primary);
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 14px 2vw 80px 2vw;
+    }
+    section { display: none; }
+    section.active { display: block; }
+
+    /* Card styles */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 16px 11px 16px;
+      margin-bottom: 22px;
+      transition: box-shadow var(--transition), transform var(--transition);
+      border: 1.5px solid var(--border);
+    }
+    .card h2 {
+      margin: 0 0 4px 0;
+      font-size: 1.19em;
+      color: var(--primary);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .card .fechas {
+      font-size: .97em;
+      color: #4780ed;
+      margin-bottom: 4px;
+    }
+    .card .objetivo {
+      font-size: .98em;
+      margin: 5px 0 8px 0;
+      color: var(--accent);
+    }
+    .card .producto {
+      background: #f4f9ff;
+      color: var(--primary);
+      margin: 12px 0 3px 0;
+      border-radius: 8px;
+      padding: 7px 13px;
+      font-size: .98em;
+    }
+    .sessions {
+      display: flex;
+      flex-direction: row;
+      gap: 2vw;
+      margin-bottom: 9px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .session {
+      flex: 1 1 210px;
+      min-width: 170px;
+      background: #f8fafd;
+      border-radius: 12px;
+      padding: 10px 10px 8px 11px;
+      margin-bottom: 5px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 4px #2050d50a;
+    }
+    .session b {
+      color: var(--primary);
+      font-size: 1.01em;
+    }
+    .session ul {
+      margin: 7px 0 0 0;
+      padding-left: 16px;
+      font-size: .98em;
+    }
+    .goal-check {
+      background: #f4faff;
+      border-radius: 9px;
+      padding: 8px 11px 8px 12px;
+      margin-top: 7px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1.2px solid #c1d6f8;
+      font-size: .97em;
+    }
+    .goal-check label {
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .goal-check input[type="checkbox"] {
+      accent-color: var(--primary);
+      width: 22px; height: 22px;
+      margin-right: 2px;
+    }
+    .goal-feedback {
+      display: none;
+      margin-left: 7px;
+      font-size: .97em;
+      font-weight: 500;
+      color: #217c2a;
+      background: #e6f9e7;
+      border-radius: 6px;
+      padding: 3px 8px;
+    }
+    .goal-check input[type="checkbox"]:checked ~ .goal-feedback {
+      display: inline;
+    }
+    .goal-feedback.no {
+      color: #c42c2c;
+      background: #fff0f0;
+    }
+    /* Bottom nav */
+    .fabar {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 11px 0 10px 0;
+      font-size: 1em;
+      z-index: 30;
+      letter-spacing: 1px;
+      border-radius: 18px 18px 0 0;
+      font-weight: 500;
+      box-shadow: 0 -2px 14px #1a397b12;
+    }
+    /* Week navigation */
+    .weeknav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      gap: 8px;
+    }
+    .weeknav button {
+      border: none; background: #e7ecf3; color: var(--primary);
+      font-size: 1.1em; padding: 6px 15px; border-radius: 8px;
+      font-weight: 600; cursor: pointer; box-shadow: 0 1px 3px #2050d513;
+      transition: background .18s, color .18s;
+    }
+    .weeknav button.active, .weeknav button:hover {
+      background: #dbe7fa;
+      color: #17406e;
+    }
+    /* Bibliografía */
+    .bibliografia {
+      margin-bottom: 24px;
+      background: #fff;
+      border-radius: 13px;
+      box-shadow: var(--shadow);
+      padding: 16px 17px 10px 17px;
+      border: 1.2px solid var(--border);
+      transition: box-shadow var(--transition);
+    }
+    .bibliografia h4 {
+      margin: 0 0 4px 0;
+      color: var(--primary);
+    }
+    .bibliografia ul {
+      margin-top: 2px;
+      font-size: 1.02em;
+      padding-left: 20px;
+    }
+    .bibliografia li {
+      margin-bottom: 5px;
+    }
+
+    /* Detail modal styles */
+    .modal-bg {
+      display: none;
+      position: fixed; top:0; left:0; right:0; bottom:0;
+      background: rgba(32,80,213,0.14);
+      z-index: 1001;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-bg.active {
+      display: flex;
+      animation: fadein .22s;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 7px 34px #2050d546;
+      max-width: 96vw; width: 440px;
+      padding: 26px 18px 18px 18px;
+      position: relative;
+      animation: popin .22s;
+    }
+    .close-modal {
+      position: absolute; top: 16px; right: 18px;
+      font-size: 1.3em; color: #6a8ec7;
+      background: none; border: none; cursor: pointer;
+      transition: color .16s;
+    }
+    .close-modal:hover { color: #2050d5; }
+    @keyframes fadein { from{opacity:0} to{opacity:1} }
+    @keyframes popin { from{transform:scale(.93)} to{transform:scale(1)} }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .container { padding: 7px 1vw 90px 1vw; }
+      .sessions { flex-direction: column; }
+      .session { min-width: 0; }
+      header { padding: 24px 4vw 10px 4vw; }
+      .modal { padding: 20px 6px 12px 6px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Motivación y Emoción · Plan 2025</h1>
+  <div class="subtitle">
+    Minimalista, interactiva y adaptada a móvil<br>
+    Lunes y jueves, 11:00-13:00 h · 19 mayo – 14 agosto 2025
+  </div>
+</header>
+<nav>
+  <button class="active" id="tab-plan">Plan</button>
+  <button id="tab-biblio">Bibliografía</button>
+</nav>
+<div class="container">
+
+<!-- PLAN Y ACTIVIDADES -->
+<section id="plan-section" class="active">
+  <div class="weeknav" id="weeknav"></div>
+  <div id="plan-cards"></div>
+</section>
+
+<!-- BIBLIOGRAFÍA -->
+<section id="biblio-section">
+  <div class="bibliografia">
+    <h4>1. Principales teorías que han influido en la investigación de la motivación y la emoción</h4>
+    <ul>
+      <li><strong>Básica:</strong> Reeve, J. (2023). <i>Understanding Motivation and Emotion</i> (8th ed.). Wiley.</li>
+      <li><strong>Complementaria:</strong> Deckers, L. (2022). <i>Motivation: Biological, Psychological, and Environmental</i> (6th ed.). Routledge.<br>
+          Deci, E. L., & Ryan, R. M. (2020). <i>Self-Determination Theory: Basic Psychological Needs in Motivation, Development, and Wellness</i>. Guilford Press.</li>
+    </ul>
+  </div>
+  <div class="bibliografia">
+    <h4>2. Componentes de la motivación y la emoción</h4>
+    <ul>
+      <li><strong>Básica:</strong> Schacter, D. L., Gilbert, D. T., Wegner, D. M., & Nock, M. K. (2022). <i>Psychology</i> (6th ed.). Worth.</li>
+      <li><strong>Complementaria:</strong> Gross, J. J. (Ed.). (2019). <i>Emotion Regulation: Conceptual and Practical Issues</i>. Routledge.<br>
+          Izard, C. E. (2021). <i>Human Emotions</i> (2nd ed.). Springer.</li>
+    </ul>
+  </div>
+  <div class="bibliografia">
+    <h4>3. Motivación y emoción como procesos de desarrollo</h4>
+    <ul>
+      <li><strong>Básica:</strong> Santrock, J. W. (2022). <i>Life-Span Development</i> (19th ed.). McGraw-Hill Education.</li>
+      <li><strong>Complementaria:</strong> Denham, S. A., & Bassett, H. H. (2020). <i>How Children Develop Social and Emotional Skills</i>. Routledge.<br>
+          Thompson, R. A. (2019). <i>Emotion and Emotion Regulation: A Developmental Perspective</i>. In J. J. Gross (Ed.), <i>Handbook of Emotion Regulation</i> (2nd ed., pp. 173-186). Guilford Press.</li>
+    </ul>
+  </div>
+  <div class="bibliografia">
+    <h4>4. La influencia de la neurociencia en la motivación y emoción</h4>
+    <ul>
+      <li><strong>Básica:</strong> Bear, M. F., Connors, B. W., & Paradiso, M. A. (2023). <i>Neuroscience: Exploring the Brain</i> (5th ed.). Wolters Kluwer.</li>
+      <li><strong>Complementaria:</strong> Panksepp, J., & Biven, L. (2021). <i>The Archaeology of Mind: Neuroevolutionary Origins of Human Emotions</i>. W. W. Norton & Company.<br>
+          Davidson, R. J., & Begley, S. (2021). <i>The Emotional Life of Your Brain</i>. Penguin Books.</li>
+    </ul>
+  </div>
+  <div class="bibliografia">
+    <h4>5. Aplicaciones de la motivación y emoción en distintos ámbitos</h4>
+    <ul>
+      <li><strong>Básica:</strong> Weiner, B. (2020). <i>Theories of Motivation: From Mechanism to Cognition</i> (2nd ed.). Psychology Press.</li>
+      <li><strong>Complementaria:</strong> Ryan, R. M., & Deci, E. L. (2023). <i>Self-Determination Theory in Work Organizations: The State of a Science</i>. Annual Review of Organizational Psychology and Organizational Behavior, 10, 257-284.<br>
+          Roberts, G. C., & Treasure, D. C. (Eds.). (2022). <i>Advances in Motivation in Sport and Exercise</i> (4th ed.). Human Kinetics.<br>
+          Schunk, D. H., & Greene, J. A. (Eds.). (2022). <i>Handbook of Self-Regulation of Learning and Performance</i> (2nd ed.). Routledge.</li>
+    </ul>
+  </div>
+  <div class="bibliografia">
+    <h4>6. Técnicas de intervención en las emociones</h4>
+    <ul>
+      <li><strong>Básica:</strong> Gross, J. J. (2019). <i>Emotion Regulation: Taking Stock and Moving Forward</i>. Emotion, 19(1), 1-9.</li>
+      <li><strong>Complementaria:</strong> Linehan, M. M. (2020). <i>DBT Skills Training Manual</i> (2nd ed.). Guilford Press.<br>
+          Neenan, M. (2021). <i>Cognitive Behavioural Coaching</i> (2nd ed.). Routledge.</li>
+    </ul>
+  </div>
+</section>
+</div>
+<div class="fabar">
+  WebApp educativa · Plan y Bibliografía · &copy; 2025
+</div>
+
+<!-- MODAL for card detail -->
+<div class="modal-bg" id="modal-bg"><div id="modal" class="modal"></div></div>
+
+<script>
+const planData = [
+  {
+    tema: "1. Principales teorías que han influido en la investigación de la motivación y la emoción",
+    fechas: "Lunes 19 de mayo y Jueves 22 de mayo 2025",
+    objetivo: "Recordar, comprender y analizar críticamente las principales teorías que han influido en la investigación de la motivación y la emoción.",
+    producto: "Cuadro comparativo digital y mural colaborativo crítico.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Quiz interactivo en PWA para activar saberes previos y problematizar la noción de “teoría”.",
+          "Equipos exploran recursos multimedia y debates digitales para identificar los supuestos críticos de cada enfoque.",
+          "Círculo de reflexión; participan en un mural interactivo donde cuestionan: ¿qué voces y contextos históricamente han sido excluidos de estas teorías?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Simulación crítica: análisis de un caso que pone en tensión dos teorías.",
+          "Creación colaborativa de una presentación multimedia argumentando las limitaciones, alcances y sesgos de cada teoría, usando pizarras HTML colaborativas.",
+          "Debate crítico con votación digital sobre qué teoría se ajusta mejor a realidades diversas, con énfasis en contextos marginados."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "2. Componentes de la motivación y la emoción",
+    fechas: "Lunes 26 de mayo y Jueves 29 de mayo 2025",
+    objetivo: "Comprender, aplicar y analizar críticamente los componentes fisiológicos, cognitivos, conductuales y socioculturales de la motivación y la emoción.",
+    producto: "Tabla digital crítica y caso complejo interactivo.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Visualización interactiva y diálogo problematizador sobre cómo se suelen explicar las emociones y motivaciones.",
+          "Análisis de casos en simuladores multimedia y actividades de arrastrar y soltar en HTML para asociar ejemplos a componentes.",
+          "Pregunta crítica en foro digital: ¿qué riesgos hay en reducir las emociones a un solo componente?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Revisión de noticias/videos recientes sobre explicaciones simplistas de la conducta humana.",
+          "Taller colaborativo: diseño de un caso complejo donde interactúen los cuatro componentes, usando apps interactivas.",
+          "Debate crítico sobre las implicaciones sociales de las explicaciones reduccionistas."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "3.1. Motivación y emoción como procesos de desarrollo",
+    fechas: "Lunes 2 de junio y Jueves 5 de junio 2025",
+    objetivo: "Analizar la interacción entre motivación y emoción como procesos de desarrollo humano y problematizar narrativas lineales.",
+    producto: "Mapa conceptual interactivo con trayectorias alternativas.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Línea de tiempo interactiva donde cada estudiante narra un hito emocional/motivacional.",
+          "Análisis problematizador de relatos de vida diversos usando simuladores digitales.",
+          "Círculo crítico: ¿cómo influyen la cultura, el género y la clase en la narrativa del desarrollo?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Debate guiado: ¿existe un desarrollo emocional/motivacional universal?",
+          "Co-creación de mapas conceptuales interactivos sobre trayectorias de desarrollo alternativas.",
+          "Foro digital: propuestas para investigar el desarrollo más allá del modelo tradicional."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "3.2. Tipos de motivación",
+    fechas: "Lunes 9 de junio y Jueves 12 de junio 2025",
+    objetivo: "Analizar, crear y criticar ejemplos de tipos de motivación desde una perspectiva contextual y política.",
+    producto: "Meme o cómic digital y mural crítico sobre motivaciones emancipadoras.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Juego interactivo para identificar tipos de motivación en situaciones reales.",
+          "Taller digital: estudiantes crean memes/cómics sobre motivaciones en contextos de poder/desigualdad.",
+          "Reflexión crítica: ¿cómo influyen las estructuras sociales en la motivación?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Discusión crítica: ¿qué tipo de motivación predomina en la escuela, familia, trabajo?",
+          "Debate y análisis de narrativas dominantes vs. motivaciones contrahegemónicas, usando apps colaborativas.",
+          "Muro digital: propuestas para fomentar motivaciones emancipadoras."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "3.3. Tipos de emoción",
+    fechas: "Lunes 16 de junio y Jueves 19 de junio 2025",
+    objetivo: "Clasificar, analizar y crear ejemplos sobre los tipos de emoción y su función adaptativa desde una perspectiva crítica.",
+    producto: "Videoclip digital y reflexión crítica sobre emociones y cambio social.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Juego digital para identificar emociones básicas y complejas.",
+          "Análisis multimedia de situaciones emocionales en contextos de injusticia/social.",
+          "Debate crítico: ¿por qué ciertas emociones son valoradas/desvalorizadas socialmente?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Taller digital de creación de videoclips sobre emociones en movimientos sociales.",
+          "Foro crítico: ¿qué función cumplen las emociones en la transformación social?",
+          "Ronda de evaluación entre pares usando rúbrica colaborativa en línea."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "3.4. Motivación y emoción en el aprendizaje, personalidad y psicopatología",
+    fechas: "Lunes 23 de junio y Jueves 26 de junio 2025",
+    objetivo: "Relacionar y analizar críticamente la motivación y la emoción con el aprendizaje, el desarrollo de la personalidad y la psicopatología.",
+    producto: "Infografía digital crítica y presentación interactiva.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Debate digital: ¿cómo se patologiza la emoción y la motivación en la cultura escolar y médica?",
+          "Simulación de casos en PWA y análisis crítico en equipos.",
+          "Pregunta generadora: ¿cómo evitar la medicalización y estigmatización?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Creación de infografía digital sobre alternativas no patologizantes.",
+          "Presentación interactiva de propuestas en pequeño grupo.",
+          "Foro digital: compromisos para una mirada integral y no estigmatizante."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "4.1. Neurociencia cognitiva",
+    fechas: "Lunes 30 de junio y Jueves 3 de julio 2025",
+    objetivo: "Comprender y analizar la influencia de la neurociencia cognitiva en la motivación y emoción desde una postura crítica.",
+    producto: "Registro digital de hallazgos, preguntas y tensiones interdisciplinarias.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Visualización de recursos multimedia con preguntas problematizadoras.",
+          "Taller en simulador neuronal digital; análisis crítico de los límites de la explicación biológica.",
+          "Foro digital: ¿qué peligros hay en reducir lo humano a lo neuronal?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Debate crítico: ¿cómo dialogan (o no) neurociencias y ciencias sociales?",
+          "Co-creación de un registro digital de hallazgos y preguntas abiertas.",
+          "Reflexión colectiva sobre diálogos (im)posibles entre saberes."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "4.2. Neurociencia afectiva",
+    fechas: "Lunes 7 de julio y Jueves 10 de julio 2025",
+    objetivo: "Comprender, analizar y problematizar la influencia de la neurociencia afectiva en la motivación y emoción.",
+    producto: "Podcast y reporte multimedia crítico.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Trivia interactiva sobre emociones y cerebro, seguida de preguntas críticas.",
+          "Análisis de artículos científicos y reflexión en equipos sobre sesgos culturales y de género.",
+          "Podcast colaborativo: voces críticas sobre la neurociencia afectiva."
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Creación de reporte multimedia crítico sobre hallazgos y ausencias.",
+          "Foro digital: ¿qué preguntas de la vida cotidiana quedan fuera de la neurociencia?",
+          "Ronda de síntesis: nuevas preguntas para la investigación."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "4.3. Neurociencia social",
+    fechas: "Lunes 14 de julio y Jueves 17 de julio 2025",
+    objetivo: "Comprender, analizar y criticar la influencia de la neurociencia social en la motivación y emoción.",
+    producto: "Ensayo digital crítico y propuesta de investigación situada.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Simulación digital sobre influencia social en emociones.",
+          "Análisis interactivo de experimentos sociales clásicos.",
+          "Foro crítico: ¿qué límites éticos y políticos tienen estos experimentos?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Debate guiado: ¿cómo influyen los contextos de opresión/resistencia en el cerebro/emoción?",
+          "Ensayo digital: propuesta para investigar la neurociencia social desde el sur global.",
+          "Evaluación colaborativa de ensayos en línea."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "5.1. Aplicaciones en el ámbito educativo",
+    fechas: "Lunes 21 de julio y Jueves 24 de julio 2025",
+    objetivo: "Aplicar y evaluar críticamente conocimientos sobre motivación y emoción en el ámbito educativo.",
+    producto: "Estrategia digital crítica y presentación interactiva.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Quiz interactivo sobre retos motivacionales en la escuela y análisis crítico de las reglas escolares.",
+          "Resolución de escenarios en simuladores PWA y problematización de la autoridad.",
+          "Debate: ¿cómo transformar el aula en un espacio emancipador?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Diseño de estrategias digitales críticas para motivar y gestionar emociones.",
+          "Presentación interactiva y retroalimentación colectiva.",
+          "Reflexión: ¿cómo evitar reproducir lógicas opresivas desde la motivación?"
+        ]
+      }
+    ]
+  },
+  {
+    tema: "5.2. Aplicaciones en el ámbito laboral",
+    fechas: "Lunes 28 de julio y Jueves 31 de julio 2025",
+    objetivo: "Aplicar y evaluar críticamente conocimientos sobre motivación y emoción en el ámbito laboral.",
+    producto: "Campaña digital crítica para el ámbito laboral.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Juego de roles interactivo sobre motivación y explotación laboral.",
+          "Simulación de intervenciones y análisis crítico de las condiciones laborales.",
+          "Pregunta digital: ¿qué papel juega la motivación en la reproducción de desigualdad?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Campaña digital para transformar ambientes de trabajo desde la justicia social.",
+          "Presentación crítica y defensa creativa.",
+          "Debate: ¿cómo evitar motivar para explotar?"
+        ]
+      }
+    ]
+  },
+  {
+    tema: "5.3. Aplicaciones en el ámbito de la salud",
+    fechas: "Lunes 4 de agosto y Jueves 7 de agosto 2025",
+    objetivo: "Aplicar y evaluar críticamente conocimientos sobre motivación y emoción en el ámbito de la salud.",
+    producto: "Propuesta digital crítica y colectiva para la salud.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Análisis interactivo de testimonios y casos de medicalización.",
+          "Simulación de casos clínicos y debate crítico sobre el poder médico.",
+          "Ronda de preguntas: ¿cómo construir salud colectiva y no solo individual?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Propuesta digital de intervención en salud desde el enfoque comunitario.",
+          "Presentación y discusión crítica.",
+          "Reflexión: compromisos para la salud emancipadora."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "5.4. Aplicaciones en el ámbito deportivo",
+    fechas: "Lunes 11 de agosto y Jueves 14 de agosto 2025",
+    objetivo: "Aplicar y evaluar críticamente conocimientos sobre motivación y emoción en el ámbito deportivo.",
+    producto: "Recurso/app interactivo con enfoque de inclusión crítica.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Visualización crítica de un reto deportivo con enfoque de género/diversidad.",
+          "Simulación digital y análisis crítico de exclusiones/inclusiones en el deporte.",
+          "Debate: ¿qué deportes y deportistas son motivados y cuáles no?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Diseño de recursos/app interactiva para motivar desde la inclusión.",
+          "Presentación de prototipos y evaluación colaborativa.",
+          "Reflexión: estrategias para democratizar el acceso y la motivación en el deporte."
+        ]
+      }
+    ]
+  },
+  {
+    tema: "6. Técnicas de intervención en las emociones",
+    fechas: "Lunes 18 de agosto y Jueves 21 de agosto 2025",
+    objetivo: "Aplicar, analizar y crear críticamente técnicas de intervención en las emociones.",
+    producto: "Video o infografía digital crítica y registro reflexivo.",
+    sesiones: [
+      {
+        titulo: "Sesión 1",
+        actividades: [
+          "Demostración multimedia y problematización: ¿para qué/quién sirven las técnicas de control emocional?",
+          "Práctica guiada en apps interactivas, registro digital de experiencias y análisis crítico.",
+          "Debate: ¿qué riesgos tiene el discurso del autocontrol en contextos de opresión?"
+        ]
+      },
+      {
+        titulo: "Sesión 2",
+        actividades: [
+          "Creación de video/infografía digital sobre técnicas desde una perspectiva de agencia y cuidado colectivo.",
+          "Presentación y coevaluación en línea.",
+          "Foro: ¿cómo usar las técnicas para resistir y transformar, no solo adaptarse?"
+        ]
+      }
+    ]
+  }
+];
+
+function renderWeekNav() {
+  let html = `<button id="week-todas" class="active">Todas</button>`;
+  for (let i = 0; i < planData.length; i++) {
+    html += `<button id="week-${i+1}">${i+1}</button>`;
+  }
+  document.getElementById('weeknav').innerHTML = html;
+}
+function renderCards(week=-1) {
+  let html = '';
+  planData.forEach((tema,idx) => {
+    if (week!==-1 && week!==idx) return;
+    html += `
+    <div class="card" tabindex="0" onclick="showDetail(${idx})" aria-label="Ver detalle de ${tema.tema}">
+      <h2>${tema.tema}</h2>
+      <div class="fechas">${tema.fechas}</div>
+      <div class="objetivo"><b>Objetivo:</b> ${tema.objetivo}</div>
+      <div class="sessions">
+        <div class="session"><b>${tema.sesiones[0].titulo}</b>
+          <ul>${tema.sesiones[0].actividades.map(act=>`<li>${act}</li>`).join('')}</ul>
+        </div>
+        <div class="session"><b>${tema.sesiones[1].titulo}</b>
+          <ul>${tema.sesiones[1].actividades.map(act=>`<li>${act}</li>`).join('')}</ul>
+        </div>
+      </div>
+      <div class="producto"><b>Producto final:</b> ${tema.producto}</div>
+      <div class="goal-check" onclick="event.stopPropagation()">
+        <input type="checkbox" id="objcheck-${idx}" onchange="goalCheckChanged(this,${idx})">
+        <label for="objcheck-${idx}">¿Alcanzaste el objetivo?</label>
+        <span class="goal-feedback" id="objfb-yes-${idx}">¡Felicidades por tu logro!</span>
+        <span class="goal-feedback no" id="objfb-no-${idx}">¡Ánimo! Repasa el tema o pide ayuda.</span>
+      </div>
+    </div>`;
+  });
+  document.getElementById('plan-cards').innerHTML = html;
+}
+function showSection(idx) {
+  document.querySelectorAll('nav button').forEach((btn, i) => btn.classList.toggle('active', i === idx));
+  document.querySelectorAll('section').forEach((sec, i) => sec.classList.toggle('active', i === idx));
+  window.scrollTo({top:0,behavior:"auto"});
+}
+function showWeek(w) {
+  renderCards(w-1);
+  document.querySelectorAll('.weeknav button').forEach((btn,i)=>{
+    btn.classList.toggle('active', i===w);
+  });
+}
+function goalCheckChanged(box, idx) {
+  const yes = box.checked;
+  document.getElementById('objfb-yes-'+idx).style.display = yes ? 'inline' : 'none';
+  document.getElementById('objfb-no-'+idx).style.display = yes ? 'none' : 'inline';
+  // Persist to localStorage
+  localStorage.setItem('goalcheck-'+idx, yes?'1':'0');
+}
+function showDetail(idx) {
+  const tema = planData[idx];
+  let html = `
+    <button class="close-modal" onclick="closeModal()" aria-label="Cerrar detalle">&times;</button>
+    <h2>${tema.tema}</h2>
+    <div class="fechas">${tema.fechas}</div>
+    <div class="objetivo"><b>Objetivo:</b> ${tema.objetivo}</div>
+    <div class="sessions">
+      <div class="session"><b>${tema.sesiones[0].titulo}</b>
+        <ul>${tema.sesiones[0].actividades.map(act=>`<li>${act}</li>`).join('')}</ul>
+      </div>
+      <div class="session"><b>${tema.sesiones[1].titulo}</b>
+        <ul>${tema.sesiones[1].actividades.map(act=>`<li>${act}</li>`).join('')}</ul>
+      </div>
+    </div>
+    <div class="producto"><b>Producto final:</b> ${tema.producto}</div>
+  `;
+  document.getElementById('modal').innerHTML = html;
+  document.getElementById('modal-bg').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('active');
+}
+// Setup events
+window.addEventListener('DOMContentLoaded',()=>{
+  renderWeekNav();
+  renderCards();
+  document.getElementById('tab-plan').onclick = ()=>showSection(0);
+  document.getElementById('tab-biblio').onclick = ()=>showSection(1);
+  // Week navigation events
+  document.getElementById('week-todas').onclick = ()=>{renderCards();showWeek(0);}
+  for(let i=0;i<planData.length;i++) {
+    document.getElementById('week-'+(i+1)).onclick = ()=>{renderCards(i);showWeek(i+1);}
+  }
+  // Restore checkboxes from localStorage
+  for(let i=0;i<planData.length;i++) {
+    const val = localStorage.getItem('goalcheck-'+i);
+    if(val==='1') {
+      document.getElementById('objcheck-'+i).checked = true;
+      document.getElementById('objfb-yes-'+i).style.display = 'inline';
+    } else if(val==='0') {
+      document.getElementById('objfb-no-'+i).style.display = 'inline';
+    }
+  }
+  // Modal close
+  document.getElementById('modal-bg').onclick = e=>{
+    if(e.target===document.getElementById('modal-bg')) closeModal();
+  };
+});
+</script>
+</body>
+</html>
